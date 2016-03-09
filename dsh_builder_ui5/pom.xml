@@ -1,0 +1,403 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sap.fiori</groupId>
+	<artifactId>dsh_builder_ui5</artifactId>
+	<packaging>war</packaging>
+	<version>72.3.0-SNAPSHOT</version>	
+	<name>dsh_builder_ui5</name>
+	<parent>
+		<groupId>com.sap.ui5</groupId>
+		<artifactId>maven-webapp-pom</artifactId>
+		<version>1.32.1</version>
+	</parent>
+	<properties>
+		<sap.ui5.version>${project.parent.version}</sap.ui5.version>
+		<ui5.classifier>opt</ui5.classifier>
+		<version.jasmine.maven.plugin>1.3.1.6</version.jasmine.maven.plugin>
+		<jasmine.webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</jasmine.webDriverClassName>
+		<js.unit.tests.dependencies.path>${project.build.directory}/js-unit-tests-dependencies</js.unit.tests.dependencies.path>
+		<js.unit.tests.runtime.path>${project.build.directory}/phantomjs</js.unit.tests.runtime.path>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>core</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>mobile</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>commons</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>table</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>ux3</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>viz</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>layout</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.ui5</groupId>
+			<artifactId>unified</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.suite</groupId>
+			<artifactId>suite-ui-commons</artifactId>
+			<version>${sap.ui5.version}</version>
+			<classifier>${ui5.classifier}</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tntim96</groupId>
+			<artifactId>JSCover</artifactId>
+			<version>1.0.22</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tntim96</groupId>
+			<artifactId>jscover-common-maven-plugin</artifactId>
+			<version>1.0.16</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>dsh_builder_ui5</finalName>
+		<plugins>
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-dependency-plugin</artifactId> -->
+<!-- 				<executions> -->
+<!-- 					Extract Maven dependencies for JS unit tests -->
+<!-- 					<execution> -->
+<!-- 						<id>unpack-js-unit-tests-dependencies</id> -->
+<!-- 						<phase>process-test-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>unpack-dependencies</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<markersDirectory>${js.unit.tests.dependencies.path}</markersDirectory> -->
+<!-- 							<overWriteReleases>false</overWriteReleases> -->
+<!-- 							<overWriteSnapshots>false</overWriteSnapshots> -->
+<!-- 							<outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename> -->
+<!-- 							<includeGroupIds>com.sap.ui5,com.sap.suite</includeGroupIds> -->
+<!-- 							<includeClassifiers>opt</includeClassifiers> -->
+<!-- 							<excludeTransitive>true</excludeTransitive> -->
+<!-- 							<outputDirectory>${js.unit.tests.dependencies.path}</outputDirectory> -->
+<!-- 							<stripVersion>true</stripVersion> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 					Extract PhantomJS runtime for JS unit tests -->
+<!-- 					<execution> -->
+<!-- 						<id>extract-js-unit-tests-runtime</id> -->
+<!-- 						<phase>process-test-resources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>unpack</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<markersDirectory>${js.unit.tests.runtime.path}</markersDirectory> -->
+<!-- 							<overWriteReleases>false</overWriteReleases> -->
+<!-- 							<overWriteSnapshots>false</overWriteSnapshots> -->
+<!-- 							<outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename> -->
+<!-- 							<artifactItems> -->
+<!-- 								<artifactItem> -->
+<!-- 									<groupId>com.github.klieber</groupId> -->
+<!-- 									<artifactId>phantomjs</artifactId> -->
+<!-- 									<version>${phantomjs.version}</version> -->
+<!-- 									<classifier>${phantomjs.os.classifier}</classifier> -->
+<!-- 									<type>${phantomjs.type}</type> -->
+<!-- 								</artifactItem> -->
+<!-- 							</artifactItems> -->
+<!-- 							<outputDirectory>${js.unit.tests.runtime.path}</outputDirectory> -->
+<!-- 							<stripVersion>true</stripVersion> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+			<!-- <plugin> <groupId>com.github.klieber</groupId> <artifactId>phantomjs-maven-plugin</artifactId> <version>0.7</version> <executions> <execution> <goals> <goal>install</goal> </goals> </execution> </executions> <configuration> <version>1.9.7</version> </configuration> </plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.github.searls</groupId> -->
+<!-- 				<artifactId>jasmine-maven-plugin</artifactId> -->
+<!-- 				<version>${version.jasmine.maven.plugin}</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>test</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<srcDirectoryName>base</srcDirectoryName> -->
+<!-- 					<jsSrcDir>${basedir}/src/main/</jsSrcDir> -->
+<!-- 					<jsTestSrcDir>${basedir}/src/test/javascript/spec</jsTestSrcDir> -->
+<!-- 					<sourceIncludes> -->
+<!-- 						<include>${basedir}/src/main/webapp/**/*.js</include> -->
+<!-- 					</sourceIncludes> -->
+<!-- 					<specIncludes> -->
+<!-- 						<include>**/*.js</include> -->
+<!-- 					</specIncludes> -->
+<!-- 					<preloadSources> -->
+<!-- 						<source>${integration.tests.bootstrap}</source> -->
+<!-- 						<source>${js.unit.tests.dependencies.path}/META-INF/resources/sap-ui-core.js</source> -->
+<!-- 					</preloadSources> -->
+<!-- 					<webDriverClassName>${jasmine.webDriverClassName}</webDriverClassName> -->
+<!-- 					<webDriverCapabilities> -->
+<!-- 						<capability> -->
+<!-- 							<name>phantomjs.binary.path</name> -->
+<!-- 							<value>${phantomjs.path}</value> -->
+<!-- 						</capability> -->
+<!-- 						<capability> -->
+<!-- 							<name>proxy</name> -->
+<!-- 							<map> -->
+<!-- 								<proxyType>DIRECT</proxyType> -->
+<!-- 							</map> -->
+<!-- 						</capability> -->
+<!-- 					</webDriverCapabilities> -->
+<!-- 					<junitXmlReportFileName>../surefire-reports/TEST-${project.name}.jasmine.xml</junitXmlReportFileName> -->
+<!-- 					<skipTests>${integration.tests.skip.jasmine}</skipTests> -->
+<!-- 					<keepServerAlive>false</keepServerAlive> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+			<!-- <plugin> <groupId>com.github.timurstrekalov</groupId> <artifactId>saga-maven-plugin</artifactId> <version>1.5.4</version> <executions> <execution> <phase>verify</phase> <goals> <goal>coverage</goal> </goals> </execution> </executions> <configuration> <baseDir>http://localhost:${jasmine.serverPort}</baseDir> <outputDir>${project.build.directory}/coverage</outputDir> <noInstrumentPatterns> <pattern>.*/spec/.*</pattern> </noInstrumentPatterns> <browserVersion>CHROME</browserVersion> </configuration> </plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-war-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<webResources> -->
+<!-- 						<resource> -->
+<!-- 							<directory>src/main/res</directory> -->
+<!-- 							<targetPath>resources</targetPath> -->
+<!-- 						</resource> -->
+<!-- 					</webResources> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+			<plugin>
+				<groupId>com.phasebash.jsdoc</groupId>
+				<artifactId>jsdoc3-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<recursive>true</recursive>
+					<directoryRoots>
+						<directoryRoot>${basedir}/src/main/webapp/</directoryRoot>
+					</directoryRoots>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.sap.ui5.tools.maven</groupId>
+				<artifactId>maven-jslint-plugin</artifactId>
+				<configuration>
+					<sourceFolders>
+						<sourceFolder>${basedir}/src/main/webapp/</sourceFolder>
+					</sourceFolders>
+					<encoding>UTF-8</encoding>
+					<failOnError>false</failOnError>
+					<options>
+						<predef>jQuery,sap</predef>
+						<browser />
+						<devel />
+						<maxErr>2000</maxErr>
+						<white />
+						<nomen />
+						<sloppy />
+						<vars />
+						<undef />
+						<eqeq />
+						<plusplus />
+						<!-- <confusion /> -->
+					</options>
+				</configuration>
+				<executions>
+					<execution>
+						<id>check</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>jslint</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- <reporting> <plugins> </plugins> </reporting> -->
+	<profiles>
+		<profile>
+			<id>fiori.eslint.build</id>
+			<activation>
+				<property>
+					<name>eslint.build</name>
+				</property>
+			</activation>
+			<properties>
+				<fiori.eslint.verbose>true</fiori.eslint.verbose>
+				<fiori.eslint.onlyChangedFiles>false</fiori.eslint.onlyChangedFiles>
+				<fiori.eslint.failOnError>false</fiori.eslint.failOnError>
+				<fiori.eslint.includes>src/main/webapp/**/*.js</fiori.eslint.includes>
+				<fiori.eslint.skip>false</fiori.eslint.skip>
+				<fiori.eslint.failOnWarnings>false</fiori.eslint.failOnWarnings>
+				<fiori.eslint.warningsTreshold>100</fiori.eslint.warningsTreshold>
+				<fiori.eslint.changedFilePaths />
+				<fiori.eslint.useEsLintRc>true</fiori.eslint.useEsLintRc>
+				<fiori.eslint.noIgnore>true</fiori.eslint.noIgnore>
+				<fiori.eslint.configFile>.lint/.eslintrc</fiori.eslint.configFile>
+				<!-- <fiori.eslint.ignorePath>.lint/.ignore</fiori.eslint.ignorePath> -->
+				<fiori.eslint.rulesDirectory />
+				<fiori.eslint.customBaseFile />
+				<fiori.eslint.reset>false</fiori.eslint.reset>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.sap.eslint</groupId>
+						<artifactId>eslint-maven-plugin</artifactId>
+						<version>0.1.1</version>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>eslint</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<changedFilePaths>${fiori.eslint.changedFilePaths}</changedFilePaths>
+							<configFile>${fiori.eslint.configFile}</configFile>
+							<rulesDirectory>${fiori.eslint.rulesDirectory}</rulesDirectory>
+							<noIgnore>${fiori.eslint.noIgnore}</noIgnore>
+							<ignorePath>${fiori.eslint.ignorePath}</ignorePath>
+							<customBaseFile>${fiori.eslint.customBaseFile}</customBaseFile>
+							<reset>${fiori.eslint.reset}</reset>
+							<formatters>
+								<formatter implementation="com.sap.eslint.java.formatters.JSLintSonarFormatter">
+									<outputFile>${project.build.directory}/jslint.xml</outputFile>
+								</formatter>
+								<formatter implementation="com.sap.eslint.java.formatters.CheckstyleFormatter">
+									<outputFile>${project.build.directory}/checkstyle.xml</outputFile>
+								</formatter>
+							</formatters>
+							<verbose>${fiori.eslint.verbose}</verbose>
+							<useEsLintRc>${fiori.eslint.useEsLintRc}</useEsLintRc>
+							<skip>${fiori.eslint.skip}</skip>
+							<failOnError>${fiori.eslint.failOnError}</failOnError>
+							<onlyChangedFiles>${fiori.eslint.onlyChangedFiles}</onlyChangedFiles>
+							<failOnWarnings>${fiori.eslint.failOnWarnings}</failOnWarnings>
+							<warningsTreshold>${fiori.eslint.warningsTreshold}</warningsTreshold>
+							<includes>
+								<include>${fiori.eslint.includes}</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>ldi.parent.fortify</id>
+			<activation>
+				<property>
+					<name>ldi.parent.fortify</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.sap.ldi</groupId>
+						<artifactId>fortify-plugin</artifactId>
+						<configuration>
+							<filter>${basedir}/SAP-SEC-ALL-Filter-File.txt</filter>
+							<projectTemplate>${basedir}/SAP-SEC-Project-Template.xml</projectTemplate>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>translate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>optimized.build</id>
+			<activation>
+				<property>
+					<name>ldi.releaseBuild</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<!-- create static archives for upload to ABAP -->
+					<plugin>
+						<groupId>com.sap.ui5.tools.maven</groupId>
+						<artifactId>lightening-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>abap-package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>lighten</goal>
+								</goals>
+								<configuration>
+									<zipClassifier>static-abap</zipClassifier>
+								</configuration>
+							</execution>
+							<execution>
+								<id>abap-package-opt</id>
+								<phase>package</phase>
+								<goals>
+									<goal>lighten</goal>
+								</goals>
+								<configuration>
+									<srcWarFile>
+										${project.build.directory}/${project.build.finalName}-opt.war
+									</srcWarFile>
+									<zipClassifier>opt-static-abap</zipClassifier>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<createDiscoveryServiceSubstitute>false</createDiscoveryServiceSubstitute>
+							<flattenThemeFallback>false</flattenThemeFallback>
+							<ignoreDefaultFilters>false</ignoreDefaultFilters>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>		
+	</profiles>
+</project>

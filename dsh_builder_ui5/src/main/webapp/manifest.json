@@ -1,0 +1,95 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.1.0",
+		"id": "ags.ssi.dshbuilder",
+		"type": "application",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"resources": "resources.json",
+		"ach": "SV-SMG-SER-DBB",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.1.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": {
+			"viewName": "ags.ssi.dshbuilder.view.main",
+			"type": "JS"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ui.unified": {},
+				"sap.suite.ui.commons": {}, 
+				"sap.viz": {}, 
+				"sap.ui.commons": {}, 
+				"sap.ui.table": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			],
+			"js": [
+				{
+					"uri": "js/FilterListItem.js"
+				},{
+					"uri": "js/main.js"
+				},{
+					"uri": "js/FRAME_UTIL.js"
+				},{
+					"uri": "js/HandleDiffOfMode.js"
+				},{
+					"uri": "js/ChartVisualization.js"
+				},{
+					"uri": "js/TableGenerator.js"
+				},{
+					"uri": "js/GlobalFilter.js"
+				},{
+					"uri": "js/afterLoad.js"
+				}
+			]
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/dsh_builder_ui5/",
+		"_version": "1.1.0"
+	}
+}
